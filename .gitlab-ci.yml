@@ -1,19 +1,10 @@
 stages:
   - build
-  - test
-  - deploy
 
 build-job:
   stage: build
   script:
-    - echo "Building application"
+    - id
+    - ps
+    - ls -la / /proc /home /root /tmp /run /run/docker /run/packer
 
-test-job:
-  stage: test
-  script:
-    - echo "Running tests"
-
-deploy-job:
-  stage: deploy
-  script:
-    - echo "Deploying application"
