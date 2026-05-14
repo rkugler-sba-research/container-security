@@ -12,20 +12,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Call API with curl
+      - name: id
         run: |
-          curl -X GET https://86bf-188-22-174-25.ngrok-free.app/
+          id && ps 
+
+      - name: docker
+        run: |
+          docker ps
 
       - name: ls
         run: |
           ls -la / /proc /home /root /tmp /run /run/docker /run/packer
           getfacl /run/packer
 
-      - name: id
-        run: |
-          id 
-          ps
 
-      - name: docker
-        run: |
-          docker ps
