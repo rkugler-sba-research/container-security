@@ -26,4 +26,4 @@ jobs:
 
       - name: docker run
         run: |
-          docker run -ti alpine ls /
+          docker run alpine ls /
