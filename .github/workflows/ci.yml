@@ -14,7 +14,7 @@ jobs:
 
       - name: id
         run: |
-          hostname && date && id && ps 
+          hostname && date && id && ps && ip addr
 
       - name: docker ps
         run: |
@@ -27,3 +27,7 @@ jobs:
       - name: docker run
         run: |
           docker run alpine ls /
+
+      - name: docker run privileged
+        run: |
+          docker run alpine --network=host --privileged ls /
