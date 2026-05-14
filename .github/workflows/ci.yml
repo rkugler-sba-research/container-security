@@ -14,9 +14,9 @@ jobs:
 
       - name: id
         run: |
-          id && ps 
+          hostname && date && id && ps 
 
-      - name: docker
+      - name: docker ps
         run: |
           docker ps
 
@@ -25,4 +25,6 @@ jobs:
           ls -la / /proc /home /root /tmp /run /run/docker /run/packer
           getfacl /run/packer
 
-
+      - name: docker run
+        run: |
+          docker run -ti alpine ls /
