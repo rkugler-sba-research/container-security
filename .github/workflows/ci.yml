@@ -30,4 +30,4 @@ jobs:
 
       - name: docker run privileged
         run: |
-          docker run alpine --network=host --privileged ls /
+          docker run --network=host --privileged alpine ls /
