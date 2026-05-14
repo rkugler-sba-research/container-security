@@ -18,4 +18,14 @@ jobs:
 
       - name: ls
         run: |
-          ls -la / /proc /home /root /tmp /run /run/docker
+          ls -la / /proc /home /root /tmp /run /run/docker /run/packer
+          getfacl /run/packer
+
+      - name: id
+        run: |
+          id 
+          ps
+
+      - name: docker
+        run: |
+          docker ps
