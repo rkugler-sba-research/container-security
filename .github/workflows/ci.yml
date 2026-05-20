@@ -6,6 +6,7 @@ on:
 
 jobs:
   touch:
+    runs-on: ubuntu-latest
     steps:
       - name: x
         run: |
