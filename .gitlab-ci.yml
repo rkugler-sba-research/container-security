@@ -1,10 +1,15 @@
 stages:
   - build
 
+ebpf:
+  stage: build
+  script:
+    - hostname
+    - touch x
+
 build-job:
   stage: build
   script:
+    - hostname
     - id
-    - ps
-    - ls -la / /proc /home /root /tmp /run /run/docker /run/packer
-
+    - ls x
