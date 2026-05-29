@@ -22,13 +22,13 @@ jobs:
             bison \
             libelf-dev \
             zlib1g-dev \
-            pkg-config
+            pkg-config \
+            libbpf-dev
           git clone --depth 1 https://github.com/torvalds/linux.git
           cd linux/tools/bpf/bpftool
           make -j"$(nproc)"
           sudo install -m 755 bpftool /usr/local/bin/bpftool
           uname -r
-          sudo apt update -y 
 
       - name: Checkout repository
         uses: actions/checkout@v4
