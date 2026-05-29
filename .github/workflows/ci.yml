@@ -13,7 +13,12 @@ jobs:
 
       - name: install dependencies
         run: |
-          uname -r && sudo apt update -y && sudo apt install -y linux-tools-common linux-tools-azure
+          git clone --depth 1 https://github.com/torvalds/linux.git
+          cd linux/tools/bpf/bpftool
+          make -j"$(nproc)"
+          sudo install -m 755 bpftool /usr/local/bin/bpftool
+          uname -r
+          sudo apt update -y 
 
       - name: Checkout repository
         uses: actions/checkout@v4
