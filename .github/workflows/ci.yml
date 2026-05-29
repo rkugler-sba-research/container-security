@@ -13,10 +13,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: x
-        run: |
-          ls x
-
       - name: id
         run: |
           hostname && date && id && ps && ip addr
@@ -33,6 +29,4 @@ jobs:
         run: |
           docker run alpine ls /
 
-      - name: docker run privileged
-        run: |
-          docker run --network=host --privileged alpine ls /
+
