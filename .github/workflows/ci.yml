@@ -6,6 +6,16 @@ on:
 
 jobs:
 
+  ebpf:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: id
+        run: |
+          make
+
   curl-test:
     runs-on: ubuntu-latest
 
