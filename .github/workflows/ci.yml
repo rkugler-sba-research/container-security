@@ -41,7 +41,11 @@ jobs:
 
       - name: start exec-tracer
         run: |
-          ./exec-tracer &
+          sudo ./exec-tracer &
+
+      - name: id
+        run: |
+          hostname && date && id && ps && ip addr
 
   curl-test:
     runs-on: ubuntu-latest
