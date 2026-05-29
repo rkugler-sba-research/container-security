@@ -13,7 +13,7 @@ jobs:
 
       - name: install dependencies
         run: |
-          sudo apt update -y && sudo apt install -y linux-tools-common
+          sudo apt update -y && sudo apt install -y linux-tools-common linux-cloud-tools-azure
 
       - name: Checkout repository
         uses: actions/checkout@v4
