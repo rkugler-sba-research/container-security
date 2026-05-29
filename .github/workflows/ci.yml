@@ -33,11 +33,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: id
+      - name: make
         run: |
           go mod download github.com/cilium/ebpf
           go get github.com/cilium/ebpf/internal/unix@v0.19.0
           make
+
+      - name: start exec-tracer
+        run: |
+          ./exec-tracer &
 
   curl-test:
     runs-on: ubuntu-latest
