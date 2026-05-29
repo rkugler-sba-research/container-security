@@ -13,7 +13,7 @@ jobs:
 
       - name: install dependencies
         run: |
-          sudo apt update -y && sudo apt install -y linux-tools-6.17.0-1015-azure
+          sudo apt update -y && sudo apt install -y bpftool
 
       - name: Checkout repository
         uses: actions/checkout@v4
