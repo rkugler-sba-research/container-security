@@ -5,12 +5,6 @@ on:
   pull_request:
 
 jobs:
-  touch:
-    runs-on: ubuntu-latest
-    steps:
-      - name: x
-        run: |
-          touch x
 
   curl-test:
     runs-on: ubuntu-latest
