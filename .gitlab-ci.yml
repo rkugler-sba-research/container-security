@@ -44,4 +44,5 @@ build:
     - dmesg
     - bpftool prog list
     - ip addr
+    - ps faux
     - cat /tmp/exec.log
