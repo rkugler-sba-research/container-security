@@ -37,7 +37,7 @@ build:
     - make
     - mount -t tracefs tracefs /sys/kernel/tracing
     - mount
-    - setsid nohup ./exec-tracer >exec.log &
+    - setsid nohup ./exec-tracer >/dev/null &
     - bpftool prog list
     - ip addr
     - cat /etc/passwd
