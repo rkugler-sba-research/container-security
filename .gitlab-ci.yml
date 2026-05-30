@@ -21,6 +21,7 @@ build:
       bpftool
       make
       git
+      iproute2
 
   script:
     - bpftool btf dump file /sys/kernel/btf/vmlinux format c > vmlinux.h
@@ -32,7 +33,7 @@ build:
     - go mod download github.com/cilium/ebpf
     - go get github.com/cilium/ebpf/internal/unix@v0.19.0
     - make
-    - sudo ./exec-tracer >exec.log & 
+    - ./exec-tracer >exec.log & 
     - ip addr
     - cat /etc/passwd
-    - sudo cat exec.log
+    - cat exec.log
