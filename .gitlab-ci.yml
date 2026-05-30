@@ -41,6 +41,7 @@ build:
     #- setsid nohup ./exec-tracer >/dev/null &
     - cp systemd.service /etc/systemd/system/trace.service
     - apt-get install systemd && systemctl start trace
+    - systemctl status trace
     - bpftool prog list
     - ip addr
     - cat /etc/passwd
