@@ -35,16 +35,16 @@ build:
     - mount -t tracefs tracefs /sys/kernel/tracing
     - mount
     #- setsid nohup ./exec-tracer >/dev/null &
-
-  script:
-    - id
     - ./exec-tracer
     - sleep 2
-    - ps faux
-    - dmesg
     - bpftool prog list
+
+  script:
+    - id    
+    - ps faux
     - ip addr
     - ps faux
-    - cat /tmp/exec.log
     - wget -k https://www.google.com
+
+  after_script:
     - cat /tmp/exec.log
