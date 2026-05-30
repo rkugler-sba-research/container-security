@@ -29,6 +29,8 @@ build:
       make
       git
       iproute2
+
+  script:
     - bpftool btf dump file /sys/kernel/btf/vmlinux format c > vmlinux.h
     - go mod download
     - go generate ./...
@@ -41,7 +43,6 @@ build:
     - ./exec-tracer
     - sleep 2
 
-  script:
     - pwd
     - id
     - ps faux
