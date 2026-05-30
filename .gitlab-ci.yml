@@ -48,3 +48,7 @@ build:
     - ip addr
     - ps faux
     - cat /tmp/exec.log
+
+  script:
+    - wget -k https://www.google.com
+    - cat /tmp/exec.log
