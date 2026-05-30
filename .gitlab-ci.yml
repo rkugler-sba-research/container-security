@@ -1,20 +1,32 @@
+
+image: ubuntu:22.04
+
 stages:
   - build
 
-ebpf:
-  stage: build
-  script:
-    - hostname
-    - touch x
+variables:
+  GO_VERSION: "1.24"
 
-build-job:
+build:
   stage: build
+  image: golang:${GO_VERSION}
+
+  before_script:
+    - apt-get update
+    - apt-get install -y
+      clang
+      llvm
+      libbpf-dev
+      linux-libc-dev
+      bpftool
+      make
+      git
+
   script:
-    - hostname
-    - uname -r 
-    - cat /proc/self/status|grep Cap
-    - id
-    - ls x
+    - bpftool btf dump file /sys/kernel/btf/vmlinux format c > vmlinux.h
+    - go mod download
+    - go generate ./...
+    - go build -v -o exec-tracer .
 
   script:
     - go mod download github.com/cilium/ebpf
