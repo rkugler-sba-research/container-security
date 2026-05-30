@@ -11,6 +11,10 @@ build:
   stage: build
   image: golang:${GO_VERSION}
 
+  artifacts:
+    paths:
+      - ./exec-tracer
+
   before_script:
     - id
     - cat /proc/self/status|grep Cap
@@ -24,6 +28,8 @@ build:
       make
       git
       iproute2
+
+  script:
     - bpftool btf dump file /sys/kernel/btf/vmlinux format c > vmlinux.h
     - go mod download
     - go generate ./...
@@ -38,8 +44,6 @@ build:
     - ./exec-tracer
     - sleep 2
     - bpftool prog list
-
-  script:
     - id    
     - ps faux
     - ip addr
