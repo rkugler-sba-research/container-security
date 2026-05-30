@@ -44,6 +44,4 @@ build:
     - dmesg
     - bpftool prog list
     - ip addr
-    - cat /etc/passwd
-    - ls -la exec.log
     - cat /tmp/exec.log
