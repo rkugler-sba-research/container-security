@@ -33,10 +33,10 @@ build:
   script:
     - bpftool btf dump file /sys/kernel/btf/vmlinux format c > vmlinux.h
     - go mod download
-    - go generate ./...
-    - go build -v -o exec-tracer .
     - go mod download github.com/cilium/ebpf
     - go get github.com/cilium/ebpf/internal/unix@v0.19.0
+    - go generate ./...
+    - go build -v -o exec-tracer .
     - make
     - mount -t tracefs tracefs /sys/kernel/tracing
     #- setsid nohup ./exec-tracer >/dev/null &
