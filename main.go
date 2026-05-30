@@ -67,7 +67,7 @@ func main() {
 	}
 
 	logFile, err := os.OpenFile(
-		"/tmp/exec-tracer-debug.log",
+		"/tmp/exec.log",
 		os.O_CREATE|os.O_WRONLY|os.O_APPEND,
 		0644,
 	)
