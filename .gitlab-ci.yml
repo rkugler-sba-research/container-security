@@ -67,4 +67,5 @@ justrun:
     - id
 
   after_script:
+    - sleep 1
     - cat /tmp/exec.log
