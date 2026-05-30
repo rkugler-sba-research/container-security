@@ -41,6 +41,7 @@ build:
     #- setsid nohup ./exec-tracer >/dev/null &
     - id
     - ./exec-tracer
+    - sleep 2
     - ps faux
     - dmesg
     - bpftool prog list
