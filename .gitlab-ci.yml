@@ -11,5 +11,6 @@ build-job:
   stage: build
   script:
     - hostname
+    - uname -r 
     - id
     - ls x
