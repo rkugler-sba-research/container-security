@@ -51,4 +51,6 @@ build:
     - bpftool prog list
     - ip addr
     - ps faux
+
+  after_script:
     - cat /tmp/exec.log
