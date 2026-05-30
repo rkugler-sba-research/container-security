@@ -39,6 +39,7 @@ build:
     - mount -t tracefs tracefs /sys/kernel/tracing
     - mount
     #- setsid nohup ./exec-tracer >/dev/null &
+    - id
     - ./exec-tracer
     - ps faux
     - dmesg
