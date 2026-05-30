@@ -35,9 +35,12 @@ build:
     - go mod download github.com/cilium/ebpf
     - go get github.com/cilium/ebpf/internal/unix@v0.19.0
     - make
+    - pwd
     - mount -t tracefs tracefs /sys/kernel/tracing
     - mount
-    - setsid nohup ./exec-tracer >/dev/null &
+    #- setsid nohup ./exec-tracer >/dev/null &
+    - cp systemd.service /etc/systemd/system/trace.service
+    - systemctl start trace
     - bpftool prog list
     - ip addr
     - cat /etc/passwd
