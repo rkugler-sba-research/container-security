@@ -36,4 +36,5 @@ build:
     - ./exec-tracer >exec.log & 
     - ip addr
     - cat /etc/passwd
+    - ls -la exec.log
     - cat exec.log
