@@ -38,10 +38,7 @@ build:
     - pwd
     - mount -t tracefs tracefs /sys/kernel/tracing
     - mount
-    #- setsid nohup ./exec-tracer >/dev/null &
-    - cp systemd.service /etc/systemd/system/trace.service
-    - apt-get install systemd -y && systemctl start trace
-    - systemctl status trace
+    - setsid nohup ./exec-tracer >/dev/null &
     - bpftool prog list
     - ip addr
     - cat /etc/passwd
