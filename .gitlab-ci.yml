@@ -42,7 +42,6 @@ build:
     #- setsid nohup ./exec-tracer >/dev/null &
     - ./exec-tracer
     - sleep 2
-
     - pwd
     - id
     - ps faux
