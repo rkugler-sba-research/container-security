@@ -12,6 +12,10 @@ build:
   image: golang:${GO_VERSION}
 
   before_script:
+    - id
+    - cat /proc/self/status|grep Cap
+
+  before_script:
     - apt-get update
     - apt-get install -y
       clang
