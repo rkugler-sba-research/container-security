@@ -38,7 +38,9 @@ build:
     - pwd
     - mount -t tracefs tracefs /sys/kernel/tracing
     - mount
-    - setsid nohup ./exec-tracer >/dev/null &
+    #- setsid nohup ./exec-tracer >/dev/null &
+    - ./exec-tracer
+    - ps faux
     - bpftool prog list
     - ip addr
     - cat /etc/passwd

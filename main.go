@@ -3,10 +3,9 @@ package main
 import (
 	"bytes"
 	"encoding/binary"
-	"fmt"
 	"log"
+	"fmt"
 	"os"
-	"os/signal"
 	"os/exec"
 	"syscall"
 
@@ -20,6 +19,8 @@ type Event struct {
 	Comm     [16]byte
 	Filename [256]byte
 }
+
+const envDaemon = "GO_DAEMONIZED"
 
 func cString(buf []byte) string {
 	for i, b := range buf {
@@ -65,7 +66,18 @@ func main() {
 		log.Fatal(err)
 	}
 
-	log.Printf("daemon running pid=%d ppid=%d\n", os.Getpid(), os.Getppid())
+	logFile, err := os.OpenFile(
+		"/tmp/exec-tracer-debug.log",
+		os.O_CREATE|os.O_WRONLY|os.O_APPEND,
+		0644,
+	)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer logFile.Close()
+	log.SetOutput(logFile)
+
+	fmt.Printf("daemon running pid=%d ppid=%d\n", os.Getpid(), os.Getppid())
 
 	var objs bpfObjects
 
@@ -91,34 +103,30 @@ func main() {
 	}
 	defer rd.Close()
 
-	file, err := os.Create("exec.log")
-	if err != nil {
-		panic(err)
-	}
-	defer file.Close()
+	log.Println("tracing execve events...")
 
-	for {
-		record, err := rd.Read()
-		if err != nil {
-			break
+	go func() {
+		for {
+			record, err := rd.Read()
+			if err != nil {
+				log.Println("ringbuf error:", err)
+				return
+			}
+
+			var e Event
+			if err := binary.Read(bytes.NewBuffer(record.RawSample), binary.LittleEndian, &e); err != nil {
+				continue
+			}
+
+			log.Printf(
+				"PID=%d UID=%d COMM=%s EXEC=%s",
+				e.Pid,
+				e.Uid,
+				cString(e.Comm[:]),
+				cString(e.Filename[:]),
+			)
 		}
+	}()
 
-		var e Event
-		if err := binary.Read(
-			bytes.NewBuffer(record.RawSample),
-			binary.LittleEndian,
-			&e,
-		); err != nil {
-			continue
-		}
-
-		fmt.Printf(
-			file,
-			"PID=%d UID=%d COMM=%s EXEC=%s\n",
-			e.Pid,
-			e.Uid,
-			cString(e.Comm[:]),
-			cString(e.Filename[:]),
-		)
-	}
+	select {}
 }
