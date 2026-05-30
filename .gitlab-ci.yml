@@ -36,6 +36,7 @@ build:
     - go get github.com/cilium/ebpf/internal/unix@v0.19.0
     - make
     - ./exec-tracer >exec.log & 
+    - bpftool prog list
     - ip addr
     - cat /etc/passwd
     - ls -la exec.log
