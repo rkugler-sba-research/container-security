@@ -41,6 +41,7 @@ build:
     #- setsid nohup ./exec-tracer >/dev/null &
     - ./exec-tracer
     - ps faux
+    - dmesg
     - bpftool prog list
     - ip addr
     - cat /etc/passwd
