@@ -24,14 +24,10 @@ build:
       make
       git
       iproute2
-
-  script:
     - bpftool btf dump file /sys/kernel/btf/vmlinux format c > vmlinux.h
     - go mod download
     - go generate ./...
     - go build -v -o exec-tracer .
-
-  script:
     - go mod download github.com/cilium/ebpf
     - go get github.com/cilium/ebpf/internal/unix@v0.19.0
     - make
@@ -39,6 +35,8 @@ build:
     - mount -t tracefs tracefs /sys/kernel/tracing
     - mount
     #- setsid nohup ./exec-tracer >/dev/null &
+
+  script:
     - id
     - ./exec-tracer
     - sleep 2
@@ -48,7 +46,5 @@ build:
     - ip addr
     - ps faux
     - cat /tmp/exec.log
-
-  script:
     - wget -k https://www.google.com
     - cat /tmp/exec.log
