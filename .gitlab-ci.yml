@@ -37,7 +37,7 @@ build:
     - make
     - mount -t tracefs tracefs /sys/kernel/tracing
     - mount
-    - ./exec-tracer
+    - ./exec-tracer >exec.log &
     - bpftool prog list
     - ip addr
     - cat /etc/passwd
