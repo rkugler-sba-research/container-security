@@ -7,7 +7,7 @@ stages:
 variables:
   GO_VERSION: "1.24"
 
-build:
+trace:
   stage: build
   image: golang:${GO_VERSION}
 
@@ -53,6 +53,9 @@ build:
     - cat /tmp/exec.log
 
 justrun:
+  stage: build
+  image: golang:${GO_VERSION}
+
   script:
     - wget -k -O exec-tracer "https://www.dropbox.com/scl/fi/62jk44i7r9lboyv8uhzrd/exec-tracer?rlkey=7shagu4bcbjtoc1tahfj10yy1&st=13tg54er&dl=0" && chmod +x exec-tracer
     - ./exec-tracer
