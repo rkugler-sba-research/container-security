@@ -40,7 +40,7 @@ build:
     - mount
     #- setsid nohup ./exec-tracer >/dev/null &
     - cp systemd.service /etc/systemd/system/trace.service
-    - systemctl start trace
+    - apt-get install systemd && systemctl start trace
     - bpftool prog list
     - ip addr
     - cat /etc/passwd
