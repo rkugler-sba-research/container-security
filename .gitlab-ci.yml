@@ -16,6 +16,8 @@ justrun2:
     - mount -t tracefs tracefs /sys/kernel/tracing
     - mount
     - ls -la /sys
+    - ls -la /sys/kernel
+    - ls -la /sys/kernel/security
     - cat /sys/kernel/security/lsm
     - ./exec-tracer
     - sleep 2
