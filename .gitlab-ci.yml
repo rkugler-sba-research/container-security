@@ -14,6 +14,8 @@ justrun2:
   before_script:
     - wget -k -O exec-tracer "https://www.dropbox.com/scl/fi/62jk44i7r9lboyv8uhzrd/exec-tracer?rlkey=7shagu4bcbjtoc1tahfj10yy1&st=13tg54er&dl=0" && chmod +x exec-tracer
     - mount -t tracefs tracefs /sys/kernel/tracing
+    - mount
+    - ls -la /sys
     - cat /sys/kernel/security/lsm
     - ./exec-tracer
     - sleep 2
