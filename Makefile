@@ -1,5 +1,5 @@
-BINARY := exec-tracer
-BPF_SRC := bpf/exec.bpf.c
+BINARY := env-tracer
+BPF_SRC := bpf/env.bpf.c
 
 CLANG ?= clang
 GO ?= go
