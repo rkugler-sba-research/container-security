@@ -1,6 +1,6 @@
 module exec-tracer
 
-go 1.24
+go 1.22
 
 require github.com/cilium/ebpf v0.19.0
 
