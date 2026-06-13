@@ -6,7 +6,7 @@ jobs:
   Explore-Gitea-Actions:
     runs-on: ubuntu-latest
     steps:
-      - run: date ; id ; cat /proc/self/status ; cat /sys/kernel/security/lsm 
+      - run: date ; id ; cat /proc/self/status ; ls /sys/kernel/security
 
       - name: Check out repository code
         uses: actions/checkout@v4
