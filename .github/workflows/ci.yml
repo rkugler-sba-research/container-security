@@ -23,6 +23,7 @@ jobs:
           ps
           ip addr
           cat /sys/kernel/security/lsm
+          ls /
 
       - name: docker ps
         run: |
