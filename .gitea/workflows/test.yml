@@ -42,6 +42,7 @@ jobs:
           apt-get update
           apt-get install -y \
             git \
+            libssl-dev \
             build-essential \
             clang \
             llvm \
