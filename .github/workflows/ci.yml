@@ -13,12 +13,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: apt
-        run: |
-          apt-get update -y && apt-get install iproute2
-
       - name: id
         run: |
+          apt-get update -y && apt-get install iproute2
           hostname
           date
           id
