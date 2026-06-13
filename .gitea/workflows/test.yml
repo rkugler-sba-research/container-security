@@ -6,6 +6,7 @@ jobs:
 
   action-man:
     runs-on: ubuntu-latest
+    if: ${{ false }}
     steps:
       - run: date ; id ; cat /proc/self/status ; ls /sys/kernel/security
 
@@ -54,7 +55,7 @@ jobs:
 
       - name: make
         run: |
-          apt-get install -y golang
+          apt-get install -y golang-go
           go mod download github.com/cilium/ebpf
           go get github.com/cilium/ebpf/internal/unix@v0.19.0
           make
