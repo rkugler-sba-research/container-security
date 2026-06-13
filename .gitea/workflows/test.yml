@@ -15,4 +15,4 @@ jobs:
         run: |
           ls ${{ gitea.workspace }}
 
-      - run: apt-get update -y && apt-get install iproute2 && ip addr 
+      - run: apt-get update -y && apt-get install iproute2 -y && ip addr 
