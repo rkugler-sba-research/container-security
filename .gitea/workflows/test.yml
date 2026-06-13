@@ -41,6 +41,7 @@ jobs:
         run: |
           apt-get update
           apt-get install -y \
+            git \
             build-essential \
             clang \
             llvm \
