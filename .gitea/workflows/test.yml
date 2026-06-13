@@ -30,6 +30,12 @@ jobs:
 
   ebpf:
     runs-on: ubuntu-latest
+    container:
+      image: ubuntu:24.04
+      options: >-
+        --privileged
+        --cap-add=SYS_ADMIN
+
     steps:
       - name: install bpftool
         run: |
@@ -50,14 +56,25 @@ jobs:
           sudo install -m 755 bpftool /usr/local/bin/bpftool
           uname -r
 
+      - name: install correct go version 1.24
+        run:
+          sudo rm -rf /usr/local/go
+          wget https://go.dev/dl/go1.24.10.linux-amd64.tar.gz
+          sudo tar -C /usr/local -xzf go1.24.10.linux-amd64.tar.gz
+          echo 'export PATH=/usr/local/go/bin:$PATH' >> ~/.bashrc
+          source ~/.bashrc
+          go version
+
       - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: make
         run: |
-          apt-get install -y golang-go
+          go version
           go mod download github.com/cilium/ebpf
-          go get github.com/cilium/ebpf/internal/unix@v0.19.0
+          go mod download golang.org/x/sys
+          go get github.com/cilium/ebpf/internal/unix
+          go mod tidy
           make
 
       - name: start exec-tracer
