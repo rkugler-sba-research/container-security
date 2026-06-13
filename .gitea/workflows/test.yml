@@ -65,7 +65,7 @@ jobs:
           wget https://go.dev/dl/go1.24.10.linux-amd64.tar.gz
           tar -C /usr/local -xzf go1.24.10.linux-amd64.tar.gz
           echo 'export PATH=/usr/local/go/bin:$PATH' >> ~/.bashrc
-          source ~/.bashrc
+          . ~/.bashrc
           go version
 
       - name: Checkout repository
