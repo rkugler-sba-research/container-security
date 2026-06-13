@@ -6,15 +6,13 @@ jobs:
   Explore-Gitea-Actions:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "🎉 The job was automatically triggered by a ${{ gitea.event_name }} event."
-      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by Gitea!"
-      - run: echo "🔎 The name of your branch is ${{ gitea.ref }} and your repository is ${{ gitea.repository }}."
+      - run: hostanme ; date ; id ; cat /proc/self/status ; cat /sys/kernel/security/lsm 
+
       - name: Check out repository code
         uses: actions/checkout@v4
-      - run: echo "💡 The ${{ gitea.repository }} repository has been cloned to the runner."
-      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
+
       - name: List files in the repository
         run: |
           ls ${{ gitea.workspace }}
-      - run: echo "🍏 This job's status is ${{ job.status }}."
-      - run: id && ps faux && ip addr 
+
+      - run: apt-get update -y && apt-get install iproute2 && ip addr 
