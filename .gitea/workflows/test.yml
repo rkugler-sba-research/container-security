@@ -15,4 +15,13 @@ jobs:
         run: |
           ls ${{ gitea.workspace }}
 
-      - run: apt-get update -y && apt-get install iproute2 -y && ip addr 
+      - name: apt
+        run: |
+          apt-get update -y
+          apt-get install iproute2 -y
+          ip addr 
+
+      - name: docker
+        run: |
+          apt-get install -y docker.io
+          docker ps
