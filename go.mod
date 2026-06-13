@@ -1,6 +1,7 @@
 module exec-tracer
 
 go 1.22
+toolchain go1.22.0
 
 require github.com/cilium/ebpf v0.19.0
 
