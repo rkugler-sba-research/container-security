@@ -13,9 +13,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: apt
+        run: |
+          apt-get update -y && apt-get install iproute2
+
       - name: id
         run: |
-          hostname && date && id && ps && ip addr
+          hostname
+          date
+          id
+          cat /proc/self/status
+          ps
+          ip addr
           cat /sys/kernel/security/lsm
 
       - name: docker ps
