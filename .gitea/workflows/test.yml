@@ -63,9 +63,7 @@ jobs:
           apt-get install wget
           rm -rf /usr/local/go
           wget https://go.dev/dl/go1.24.10.linux-amd64.tar.gz
-          tar -C /usr/local -xzf go1.24.10.linux-amd64.tar.gz
-          echo 'export PATH=/usr/local/go/bin:$PATH' >> ~/.bashrc
-          . ~/.bashrc
+          tar -C /usr/ -xzf go1.24.10.linux-amd64.tar.gz
           go version
 
       - name: Checkout repository
