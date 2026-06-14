@@ -3,7 +3,6 @@ package main
 import (
 	"bytes"
 	"encoding/binary"
-	"fmt"
 	"log"
 	"os"
 	"os/exec"
@@ -20,18 +19,17 @@ type Event struct {
 	Uid      uint32
 	Comm     [16]byte
 	Filename [256]byte
-
-	Envc uint32
-	Env  [10][64]byte
+	//Argc uint32
+	//Args [10][64]byte
 }
 
-func cString(b []byte) string {
-	for i, c := range b {
-		if c == 0 {
-			return string(b[:i])
+func cString(buf []byte) string {
+	for i, b := range buf {
+		if b == 0 {
+			return string(buf[:i])
 		}
 	}
-	return string(b)
+	return string(buf)
 }
 
 func daemonize() error {
@@ -46,14 +44,15 @@ func daemonize() error {
 		Setsid: true,
 	}
 
-	f, err := os.OpenFile("/dev/null", os.O_RDWR, 0)
+	devNull, err := os.OpenFile("/dev/null", os.O_RDWR, 0)
 	if err != nil {
 		return err
 	}
+	defer devNull.Close()
 
-	cmd.Stdin = f
-	cmd.Stdout = f
-	cmd.Stderr = f
+	cmd.Stdin = devNull
+	cmd.Stdout = devNull
+	cmd.Stderr = devNull
 
 	if err := cmd.Start(); err != nil {
 		return err
@@ -69,7 +68,7 @@ func main() {
 	}
 
 	logFile, err := os.OpenFile(
-		"/tmp/env-tracer.log",
+		"/var/log/exec-tracer.log",
 		os.O_CREATE|os.O_WRONLY|os.O_APPEND,
 		0644,
 	)
@@ -80,60 +79,73 @@ func main() {
 
 	log.SetOutput(logFile)
 
+	log.Printf("exec-tracer started pid=%d", os.Getpid())
+
 	var objs bpfObjects
+
 	if err := loadBpfObjects(&objs, nil); err != nil {
-		log.Fatal(err)
+		log.Fatalf("loading bpf objects: %v", err)
 	}
 	defer objs.Close()
 
-	lnk, err := link.Tracepoint(
+	tp, err := link.Tracepoint(
 		"syscalls",
 		"sys_enter_execve",
 		objs.TraceExecve,
 		nil,
 	)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalf("attach tracepoint: %v", err)
 	}
-	defer lnk.Close()
+	defer tp.Close()
 
 	rd, err := ringbuf.NewReader(objs.Events)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalf("create ringbuf reader: %v", err)
 	}
 	defer rd.Close()
 
-	log.Println("tracing execve env vars...")
+	log.Println("tracing execve events")
 
-	for {
-		rec, err := rd.Read()
-		if err != nil {
-			log.Println("ringbuf error:", err)
-			return
-		}
-
-		var e Event
-
-		if err := binary.Read(
-			bytes.NewReader(rec.RawSample),
-			binary.LittleEndian,
-			&e,
-		); err != nil {
-			continue
-		}
-
-		fmt.Printf(
-			"\nPID=%d COMM=%s EXEC=%s\n",
-			e.Pid,
-			cString(e.Comm[:]),
-			cString(e.Filename[:]),
-		)
-
-		for i := 0; i < int(e.Envc) && i < len(e.Env); i++ {
-			env := cString(e.Env[i][:])
-			if env != "" {
-				fmt.Printf("  ENV: %s\n", env)
+	go func() {
+		for {
+			record, err := rd.Read()
+			if err != nil {
+				log.Printf("ringbuf read error: %v", err)
+				return
 			}
+
+			var e Event
+
+			if err := binary.Read(
+				bytes.NewReader(record.RawSample),
+				binary.LittleEndian,
+				&e,
+			); err != nil {
+				log.Printf("decode event: %v", err)
+				continue
+			}
+			/*
+			args := make([]string, 0, e.Argc)
+
+			for i := 0; i < int(e.Argc) && i < len(e.Args); i++ {
+				arg := cString(e.Args[i][:])
+				if arg != "" {
+					args = append(args, arg)
+				}
+			}
+			*/
+			log.Printf(
+				"PID=%d UID=%d COMM=%s EXEC=%s ARGS=\"%s\"",
+				e.Pid,
+				e.Uid,
+				cString(e.Comm[:]),
+				cString(e.Filename[:]),
+				"Not implemented",
+				//strings.Join(args, " "),
+			)
 		}
-	}
+	}()
+
+	select {}
 }
