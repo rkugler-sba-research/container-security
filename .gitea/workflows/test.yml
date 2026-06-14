@@ -30,6 +30,7 @@ jobs:
 
   ebpf:
     runs-on: ubuntu-latest
+    if: ${{ false }}
     container:
       image: ubuntu:24.04
       options: >-
@@ -104,4 +105,24 @@ jobs:
         run: |
           cat /var/log/exec-tracer.log
        
+  justrun:
+    runs-on: ubuntu-latest
+    container:
+      image: ubuntu:24.04
+      options: >-
+        --privileged
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: my-artifact
+          path: exec-tracer
 
+      - name: start exec-tracer
+        run: |
+          mount
+          mount -t tracefs tracefs /sys/kernel/tracing
+          ./exec-tracer >exec.log &
+
+      - name: show bpf log
+        run: |
+          cat /var/log/exec-tracer.log
