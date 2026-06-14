@@ -91,6 +91,7 @@ jobs:
           hostname && date && id && ps
 
       - name: show bpf log
+        run: |
           cat exec.log
        
 
