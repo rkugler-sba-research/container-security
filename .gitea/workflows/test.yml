@@ -84,6 +84,7 @@ jobs:
 
       - name: start exec-tracer
         run: |
+          mount -t tracefs tracefs /sys/kernel/tracing
           ./exec-tracer >exec.log &
 
       - name: id
