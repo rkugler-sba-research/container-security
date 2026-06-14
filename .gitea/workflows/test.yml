@@ -95,6 +95,6 @@ jobs:
 
       - name: show bpf log
         run: |
-          cat exec.log
+          cat /var/log/exec-tracer.log
        
 
