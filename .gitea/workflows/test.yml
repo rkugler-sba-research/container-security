@@ -43,7 +43,7 @@ jobs:
           apt-get update
           apt-get install -y \
             git \
-            git nodejs \
+            nodejs \
             iproute2 \
             libssl-dev \
             build-essential \
@@ -112,6 +112,13 @@ jobs:
       options: >-
         --privileged
     steps:
+      - name: install
+        run: |
+          apt-get update -y && apt-get install -y \
+            git \
+            nodejs \
+            iproute2
+
       - uses: actions/download-artifact@v3
         with:
           name: my-artifact
