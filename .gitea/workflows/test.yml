@@ -110,7 +110,9 @@ jobs:
     container:
       image: ubuntu:24.04
       options: >-
-        --privileged
+        --cap-add=SYS_ADMIN
+        --cap-add=SYS_MOUNT
+
     steps:
       - name: install
         run: |
