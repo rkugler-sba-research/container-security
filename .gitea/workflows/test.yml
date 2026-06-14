@@ -43,6 +43,7 @@ jobs:
           apt-get install -y \
             git \
             git nodejs \
+            iproute2 \
             libssl-dev \
             build-essential \
             clang \
@@ -87,7 +88,9 @@ jobs:
 
       - name: id
         run: |
-          hostname && date && id && ps && ip addr
+          hostname && date && id && ps
+
+      - name: show bpf log
           cat exec.log
        
 
