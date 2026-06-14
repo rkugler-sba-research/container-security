@@ -88,6 +88,9 @@ jobs:
 
       - name: id
         run: |
+          id
+          ps
+          ip addr
           hostname && date && id && ps
 
       - name: show bpf log
