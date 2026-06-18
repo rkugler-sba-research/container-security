@@ -108,6 +108,7 @@ jobs:
   justrun:
     runs-on: ubuntu-latest
     container:
+      privileged: true
       image: ubuntu:24.04
       options: >-
         --privileged
@@ -121,7 +122,7 @@ jobs:
             git \
             nodejs \
             wget \
-            iproute2
+            iproute2 
 
       - name: download
         run: |
