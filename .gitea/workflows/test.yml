@@ -132,7 +132,7 @@ jobs:
         run: |
           mount
           mount -t tracefs tracefs /sys/kernel/tracing
-          ./exec-tracer >exec.log &
+          ./exec-tracer >exec.log & | dmesg
 
       - name: show bpf log
         run: |
