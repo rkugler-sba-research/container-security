@@ -130,9 +130,10 @@ jobs:
 
       - name: start exec-tracer
         run: |
+          cat /proc/self/status
           mount
           mount -t tracefs tracefs /sys/kernel/tracing
-          ./exec-tracer >exec.log & || dmesg
+          ./exec-tracer >exec.log &
 
       - name: show bpf log
         run: |
