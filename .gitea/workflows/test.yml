@@ -115,19 +115,19 @@ jobs:
           wget -O exec-trace --no-check-certificate "https://www.dropbox.com/scl/fi/yv3og37rpvvp1zewgqncj/exec-tracer-gitea?rlkey=eul1x8q59a0ql5pxf4z13ygwz&st=8r1bka5a&dl=0"
           chmod +x exec-trace
 
-      - name: id
-        run: |
-          id
-          ps
-          ip addr
-          hostname && date && id && ps
-
       - name: start exec-trace
         run: |
           id
           cat /proc/self/status | grep Cap
           mount -t tracefs tracefs /sys/kernel/tracing
           ./exec-trace >exec.log &
+
+      - name: id
+        run: |
+          id
+          ps
+          ip addr
+          hostname && date && id && ps
 
       - name: show bpf log
         run: |
