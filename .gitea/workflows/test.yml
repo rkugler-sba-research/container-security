@@ -122,7 +122,7 @@ jobs:
           mount -t tracefs tracefs /sys/kernel/tracing
           ./exec-trace >exec.log &
 
-      - name: id
+      - name: test runs
         run: |
           id
           ps
@@ -132,3 +132,4 @@ jobs:
       - name: show bpf log
         run: |
           cat /var/log/exec-tracer.log
+
