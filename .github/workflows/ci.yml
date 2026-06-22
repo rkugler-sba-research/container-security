@@ -8,10 +8,38 @@ jobs:
 
   curl-test:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            build-essential \
+            clang \
+            llvm \
+            flex \
+            bison \
+            libelf-dev \
+            zlib1g-dev \
+            pkg-config \
+            libbpf-dev
+          git clone --depth 1 https://github.com/torvalds/linux.git
+          cd linux/tools/bpf/bpftool
+          make -j"$(nproc)"
+          sudo install -m 755 bpftool /usr/local/bin/bpftool
+          uname -r
+      
+      - name: make
+        run: |
+          go mod download github.com/cilium/ebpf
+          go get github.com/cilium/ebpf/internal/unix@v0.19.0
+          make
+
+      - name: start exec-tracer
+        run: |
+          sudo ./exec-tracer >exec.log &
 
       - name: id
         run: |
@@ -37,4 +65,6 @@ jobs:
         run: |
           docker run alpine ls /
 
-
+      - name: show bpf log
+        run: |
+          cat /var/log/exec-tracer.log
