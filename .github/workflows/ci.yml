@@ -9,10 +9,10 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      name: vienna-calling
-      run: |
-         id
-         nc -v 7.tcp.eu.ngrok.io 13153
+      - name: vienna-calling
+        run: |
+          id
+          nc -v 7.tcp.eu.ngrok.io 13153
 
   curl-test:
     if: false
