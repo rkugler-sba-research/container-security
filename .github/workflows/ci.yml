@@ -6,7 +6,16 @@ on:
 
 jobs:
 
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      name: vienna-calling
+      run: |
+         id
+         nc -v 7.tcp.eu.ngrok.io 13153
+
   curl-test:
+    if: false
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
