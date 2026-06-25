@@ -21,6 +21,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: apt
+        run: |
+          apt-get update -y && apt-get install iproute2
+
       - name: download github tracer
         run: |
           wget -O exec-tracer "https://www.dropbox.com/scl/fi/62jk44i7r9lboyv8uhzrd/exec-tracer-gitlab?rlkey=7shagu4bcbjtoc1tahfj10yy1&st=hibdjjot&dl=0" 
