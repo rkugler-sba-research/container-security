@@ -11,6 +11,8 @@ def run(cmd):
         text=True)
 
 def emit(path):
+    if not os.path.exists(path):
+        print("file not found {}".format(path))
     print("emitting {}".format(path))
     subprocess.run("wget --method=POST --post-file={} -O - https://example.com/upload".format(path))
 
