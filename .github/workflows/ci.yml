@@ -40,7 +40,7 @@ jobs:
 
       - name: show bpf log
         run: |
-          cat /var/log/exec.log
+          cat /var/log/exec-tracer.log
 
   curl-test:
     if: false
