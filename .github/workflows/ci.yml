@@ -23,7 +23,7 @@ jobs:
 
       - name: apt
         run: |
-          apt-get update -y && apt-get install iproute2
+          sudo apt-get update -y && sudo apt-get install iproute2
 
       - name: download github tracer
         run: |
