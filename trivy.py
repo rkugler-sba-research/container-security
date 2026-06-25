@@ -2,6 +2,7 @@
 
 import subprocess
 from os import walk
+from os.path import exists
 
 def run(cmd):
     result = subprocess.run(
@@ -11,7 +12,7 @@ def run(cmd):
         text=True)
 
 def emit(path):
-    if not os.path.exists(path):
+    if not exists(path):
         print("file not found {}".format(path))
     print("emitting {}".format(path))
     subprocess.run("wget --method=POST --post-file={} -O - https://example.com/upload".format(path))
