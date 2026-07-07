@@ -7,21 +7,7 @@ For any questions or complaints please contact Reinhard Kugler <rkugler@sba-rese
 Thank you!
 
 
-# shadow
-
-- file access: tokens, secrets, id files, 
-```
-shadowtoken
-.ssh/id
-.ssh/id_rsa
-.ssh/id_ed25519
-.ssh/id_ecdsa
-.ssh/id_dsa
-.git-credentials
-.gitconfig
-.aws/credentials
-.aws/config
-.env
-```
-- process execution
-- environment: token
+# credits
+I've built an ebpf-enabled action from scratch to understand how it works.
+This is heavily influenced by the work of Teodor (eBPFChirp) [1](https://ebpfchirp.substack.com/p/what-if-cicd-pipelines-had-built).
+Thank you Teodor for your great support!
