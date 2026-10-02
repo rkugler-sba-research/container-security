@@ -85,6 +85,7 @@ func main() {
        defer logFile.Close()
 
        log.SetOutput(logFile)
+       defer w.Flush()
 
        log.Printf("exec-tracer started pid=%d", os.Getpid())
  
