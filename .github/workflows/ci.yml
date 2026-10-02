@@ -110,3 +110,10 @@ jobs:
       - name: show bpf log
         run: |
           cat /var/log/exec-tracer.log
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: my-artifact
+          path: exec-tracer
+          retention-days: 7
